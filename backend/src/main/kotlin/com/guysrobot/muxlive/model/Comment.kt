@@ -1,8 +1,10 @@
 package com.guysrobot.muxlive.model
 
 import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
 
-data class Model(
+@Document(value = "Comment")
+data class Comment(
     @Id
     private val id: String,
     private val text: String,
