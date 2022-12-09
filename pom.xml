@@ -14,10 +14,6 @@
     <packaging>pom</packaging>
     <name>muxlive</name>
 	<description>Demo project for Spring Boot</description>
-    <modules>
-        <module>backend</module>
-		<module>fronted</module>
-	</modules>
     <properties>
 		<java.version>17</java.version>
 		<kotlin.version>1.7.21</kotlin.version>

@@ -6,16 +6,16 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document(value = "Video")
 data class Video(
     @Id
-    private val id: String,
-    private val title: String,
-    private val description: String,
-    private val userId: String,
-    private val likes: Int,
-    private val disLikes: Int,
-    private val tags: Set<String>,
-    private val videoUrl: String,
-    private val videoStatus: VideoStatus,
-    private val viewCount: Int,
-    private val thumbnailUrl: String,
-    private val comments: List<Comment>
+    private val id: String? = null,
+    private val title: String? = null,
+    private val description: String? = null,
+    private val userId: String? = null,
+    private val likes: Int = 0,
+    private val disLikes: Int = 0,
+    private val tags: Set<String> = setOf(),
+    private val videoUrl: String? = null,
+    private val videoStatus: VideoStatus? = null,
+    private val viewCount: Int = 0,
+    private val thumbnailUrl: String? = null,
+    private val comments: List<Comment> = listOf()
 )
