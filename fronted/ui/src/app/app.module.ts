@@ -8,7 +8,8 @@ import { UploadVideoComponent } from './upload-video/upload-video.component';
 import { FormsModule } from '@angular/forms';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { HttpClientModule } from '@angular/common/http';
-import { VideoDetailComponent } from './video-detail/video-detail.component'
+import { VideoDetailComponent } from './video-detail/video-detail.component';
+import { AuthConfigModule } from './auth/auth-config.module'
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { VideoDetailComponent } from './video-detail/video-detail.component'
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    NgxFileDropModule
+    NgxFileDropModule,
+    AuthConfigModule
   ],
   providers: [],
   bootstrap: [AppComponent]
