@@ -5,7 +5,7 @@ import { AuthModule } from 'angular-auth-oidc-client';
 @NgModule({
     imports: [AuthModule.forRoot({
         config: {
-            authority: 'dev-r3vbps5kxta1ef0w.us.auth0.com',
+            authority: 'https://dev-r3vbps5kxta1ef0w.us.auth0.com',
             redirectUrl: window.location.origin,
             clientId: 'qgzBLOqOH0bS4RtKthwkZ6KUv00BWJgB',
             scope: 'openid profile offline_access',
