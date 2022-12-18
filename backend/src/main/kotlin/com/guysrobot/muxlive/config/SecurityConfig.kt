@@ -34,6 +34,7 @@ class SecurityConfig(
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .cors(Customizer.withDefaults())
                 .oauth2ResourceServer()
                 .jwt()
         }
