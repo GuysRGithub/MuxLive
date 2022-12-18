@@ -7,9 +7,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UploadVideoComponent } from './upload-video/upload-video.component';
 import { FormsModule } from '@angular/forms';
 import { NgxFileDropModule } from 'ngx-file-drop';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { VideoDetailComponent } from './video-detail/video-detail.component';
 import { AuthConfigModule } from './auth/auth-config.module'
+import { AuthInterceptor } from 'angular-auth-oidc-client';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,11 @@ import { AuthConfigModule } from './auth/auth-config.module'
     NgxFileDropModule,
     AuthConfigModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
