@@ -10,4 +10,6 @@ data class VideoDto(
     val videoUrl: String? = null,
     val videoStatus: VideoStatus? = null,
     val thumbnailUrl: String? = null,
+    val likeCount: Int = 0,
+    val disLikeCount: Int = 0,
 )

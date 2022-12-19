@@ -8,7 +8,11 @@ import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 
 @Component
-class VideoService(private val service: FileService, private val repository: VideoRepository) {
+class VideoService(
+    private val service: FileService,
+    private val repository: VideoRepository,
+    private val userService: UserService,
+) {
 
     fun upload(file: MultipartFile): VideoResponse {
         val path = service.upload(file)
@@ -52,6 +56,65 @@ class VideoService(private val service: FileService, private val repository: Vid
     private fun getVideo(id: String): Video {
         return repository.findById(id)
             .orElseThrow { IllegalAccessException("Cannot find video by id $id") }
+    }
+
+    /**
+     * Toggle like the video (if already liked and like again, will remove like)
+     * @param videoId: The id of the video, throw exception if the video does not exist
+     */
+    fun like(videoId: String): VideoDto {
+        val video = getVideo(videoId)
+
+        // If user already like video -> decrement like
+        if (userService.ifLikedVideo(videoId)) {
+            // Unlike
+            video.unLike()
+            userService.removeFromLikedVideos(videoId)
+        } else {
+            // If user already dislike video -> decrement dislike and increment like
+            if (userService.ifDisLikedVideo(videoId)) {
+                // Decrement dislike
+                video.unDislike()
+                userService.removeFromDisLikedVideos(videoId)
+            }
+            // Increment like
+            video.like()
+            userService.addToLikedVideos(videoId)
+        }
+
+        // Persist the video
+        repository.save(video)
+
+        return video.toDTO()
+    }
+
+    /**
+     * Toggle dislike the video (if already disliked and dislike again, will remove dislike)
+     * @param videoId: The id of the video, throw exception if the video does not exist
+     */
+    fun dislike(videoId: String): VideoDto {
+        val video = getVideo(videoId)
+
+        // If user already dislike video -> decrement dislike (un dislike)
+        // If user already like video -> decrement like (unlike) and increment dislike (dislike)
+        if (userService.ifLikedVideo(videoId)) {
+            video.unDislike()
+            userService.removeFromDisLikedVideos(videoId)
+        } else {
+            // Unlike
+            if (userService.ifDisLikedVideo(videoId)) {
+                video.unLike()
+                userService.removeFromLikedVideos(videoId)
+            }
+            // Dislike
+            video.dislike()
+            userService.addToDisLikedVideos(videoId)
+        }
+
+        // Persist the video
+        repository.save(video)
+
+        return video.toDTO()
     }
 
 }

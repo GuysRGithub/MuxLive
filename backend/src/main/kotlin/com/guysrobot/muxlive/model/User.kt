@@ -2,6 +2,7 @@ package com.guysrobot.muxlive.model
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
+import java.util.concurrent.ConcurrentHashMap
 
 @Document(value = "User")
 data class User(
@@ -15,6 +16,25 @@ data class User(
     private val subscribedToUsers: Set<String> = setOf(),
     private val subscriber: Set<String> = setOf(),
     private val videoHistory: Set<String> = setOf(),
-    private val likedVideos: Set<String> = setOf(),
-    private val disLikedVideos: Set<String> = setOf(),
-)
+    private val _likedVideos: MutableSet<String> = ConcurrentHashMap.newKeySet(),
+    private val _disLikedVideos: MutableSet<String> = ConcurrentHashMap.newKeySet(),
+) {
+    val likedVideos: Set<String> = _likedVideos
+    val disLikedVideos: Set<String> = _disLikedVideos
+
+    fun addToLikedVideos(videoId: String) {
+        _likedVideos.add(videoId)
+    }
+
+    fun addToDisLikedVideos(videoId: String) {
+        _disLikedVideos.add(videoId)
+    }
+
+    fun removeFromLikedVideos(videoId: String) {
+        _likedVideos.remove(videoId)
+    }
+
+    fun removeFromDisLikedVideos(videoId: String) {
+        _disLikedVideos.remove(videoId)
+    }
+}

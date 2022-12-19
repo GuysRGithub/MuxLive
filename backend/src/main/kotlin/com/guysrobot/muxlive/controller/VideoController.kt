@@ -5,6 +5,7 @@ import com.guysrobot.muxlive.dto.VideoResponse
 import com.guysrobot.muxlive.service.VideoService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -34,5 +35,17 @@ class VideoController(private val videoService: VideoService) {
     @ResponseStatus(HttpStatus.OK)
     fun editVideoMetadata(@RequestBody videoDto: VideoDto): VideoDto {
         return videoService.editMetadata(videoDto)
+    }
+
+    @PostMapping("/{videoId}/like")
+    @ResponseStatus(HttpStatus.OK)
+    fun like(@PathVariable videoId: String) : VideoDto? {
+        return videoService.like(videoId)
+    }
+
+    @PostMapping("/{videoId}/dislike")
+    @ResponseStatus(HttpStatus.OK)
+    fun dislike(@PathVariable videoId: String) : VideoDto? {
+        return videoService.dislike(videoId)
     }
 }
