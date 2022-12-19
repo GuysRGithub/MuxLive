@@ -6,13 +6,15 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document(value = "User")
 data class User(
     @Id
-    private val id: String,
-    private val firstName: String,
-    private val lastName: String,
-    private val email: String,
-    private val subscribedToUsers: Set<String>,
-    private val subscriber: Set<String>,
-    private val videoHistory: Set<String>,
-    private val likedVideos: Set<String>,
-    private val disLikedVideos: Set<String>,
+    private val id: String? = null,
+    private val firstName: String? = null,
+    private val lastName: String? = null,
+    private val fullName: String? = null,
+    private val email: String? = null,
+    private val sub: String? = null,
+    private val subscribedToUsers: Set<String> = setOf(),
+    private val subscriber: Set<String> = setOf(),
+    private val videoHistory: Set<String> = setOf(),
+    private val likedVideos: Set<String> = setOf(),
+    private val disLikedVideos: Set<String> = setOf(),
 )
