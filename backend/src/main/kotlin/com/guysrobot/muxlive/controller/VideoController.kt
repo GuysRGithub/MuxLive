@@ -41,7 +41,7 @@ class VideoController(private val videoService: VideoService) {
 
     @GetMapping("/{videoId}")
     @ResponseStatus(HttpStatus.OK)
-    fun getVideoDetail(@PathParam("videoId") id: String): VideoDto {
+    fun getVideoDetail(@PathVariable("videoId") id: String): VideoDto {
         return videoService.getVideoDetail(id)
     }
 
