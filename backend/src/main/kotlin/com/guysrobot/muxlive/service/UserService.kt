@@ -107,4 +107,30 @@ class UserService(
             repository.save(this)
         }
     }
+
+    fun subscribe(userId: String) {
+        // Add userId to subscriber's user list
+        currentUser.run {
+            this.subscribe(userId)
+            repository.save(this)
+        }
+
+        repository.findById(userId).orElseThrow { IllegalArgumentException("Invalid user with userId $userId") }.run {
+            this.addSubscriber(currentUser.id)
+            repository.save(this)
+        }
+    }
+
+    fun unsubscribe(userId: String) {
+        // Add userId to subscriber's user list
+        currentUser.run {
+            this.unsubscribe(userId)
+            repository.save(this)
+        }
+
+        repository.findById(userId).orElseThrow { IllegalArgumentException("Invalid user with userId $userId") }.run {
+            this.removeSubscriber(currentUser.id)
+            repository.save(this)
+        }
+    }
 }
