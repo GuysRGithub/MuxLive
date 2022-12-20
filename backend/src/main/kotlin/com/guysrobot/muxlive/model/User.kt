@@ -15,12 +15,13 @@ data class User(
     private val sub: String? = null,
     private val subscribedToUsers: Set<String> = setOf(),
     private val subscriber: Set<String> = setOf(),
-    private val videoHistory: Set<String> = setOf(),
+    private val _videoHistory: MutableSet<String> = ConcurrentHashMap.newKeySet(),
     private val _likedVideos: MutableSet<String> = ConcurrentHashMap.newKeySet(),
     private val _disLikedVideos: MutableSet<String> = ConcurrentHashMap.newKeySet(),
 ) {
     val likedVideos: Set<String> = _likedVideos
     val disLikedVideos: Set<String> = _disLikedVideos
+    val videoHistory: Set<String> = _videoHistory
 
     fun addToLikedVideos(videoId: String) {
         _likedVideos.add(videoId)
@@ -36,5 +37,9 @@ data class User(
 
     fun removeFromDisLikedVideos(videoId: String) {
         _disLikedVideos.remove(videoId)
+    }
+
+    fun addVideoHistory(videoId: String) {
+        _videoHistory.add(videoId)
     }
 }

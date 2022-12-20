@@ -14,6 +14,10 @@ class VideoService(
     private val userService: UserService,
 ) {
 
+    private fun increaseView(video: Video) {
+        video.view()
+        repository.save(video)
+    }
     fun upload(file: MultipartFile): VideoResponse {
         val path = service.upload(file)
         val video = Video(videoUrl = path)
@@ -56,6 +60,15 @@ class VideoService(
     private fun getVideo(id: String): Video {
         return repository.findById(id)
             .orElseThrow { IllegalAccessException("Cannot find video by id $id") }
+    }
+
+    fun getVideoDetail(id: String): VideoDto {
+        val video = getVideo(id)
+        // Increase view count
+        increaseView(video)
+        // Add to history
+        userService.addVideoToHistory(id)
+        return video.toDTO()
     }
 
     /**

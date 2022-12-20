@@ -3,8 +3,10 @@ package com.guysrobot.muxlive.controller
 import com.guysrobot.muxlive.dto.VideoDto
 import com.guysrobot.muxlive.dto.VideoResponse
 import com.guysrobot.muxlive.service.VideoService
+import jakarta.websocket.server.PathParam
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -37,15 +39,21 @@ class VideoController(private val videoService: VideoService) {
         return videoService.editMetadata(videoDto)
     }
 
+    @GetMapping("/{videoId}")
+    @ResponseStatus(HttpStatus.OK)
+    fun getVideoDetail(@PathParam("videoId") id: String): VideoDto {
+        return videoService.getVideoDetail(id)
+    }
+
     @PostMapping("/{videoId}/like")
     @ResponseStatus(HttpStatus.OK)
-    fun like(@PathVariable videoId: String) : VideoDto? {
+    fun like(@PathVariable videoId: String): VideoDto? {
         return videoService.like(videoId)
     }
 
     @PostMapping("/{videoId}/dislike")
     @ResponseStatus(HttpStatus.OK)
-    fun dislike(@PathVariable videoId: String) : VideoDto? {
+    fun dislike(@PathVariable videoId: String): VideoDto? {
         return videoService.dislike(videoId)
     }
 }

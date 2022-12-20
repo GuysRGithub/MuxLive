@@ -17,7 +17,7 @@ data class Video(
     val tags: Set<String> = setOf(),
     val videoUrl: String? = null,
     val videoStatus: VideoStatus? = null,
-    val viewCount: Int = 0,
+    val viewCount: AtomicInteger = AtomicInteger(0),
     val thumbnailUrl: String? = null,
     val comments: List<Comment> = listOf()
 ) {
@@ -49,5 +49,9 @@ data class Video(
             likeCount = likes.get(),
             disLikeCount = disLikes.get()
         )
+    }
+
+    fun view() {
+        viewCount.incrementAndGet()
     }
 }

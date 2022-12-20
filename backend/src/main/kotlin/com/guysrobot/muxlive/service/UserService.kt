@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.stereotype.Service
-import java.lang.IllegalArgumentException
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -86,6 +85,7 @@ class UserService(
             repository.save(this)
         }
     }
+
     fun removeFromDisLikedVideos(videoId: String) {
         currentUser.run {
             removeFromLikedVideos(videoId)
@@ -99,5 +99,12 @@ class UserService(
 
     fun ifDisLikedVideo(videoId: String): Boolean {
         return currentUser.disLikedVideos.contains(videoId)
+    }
+
+    fun addVideoToHistory(videoId: String) {
+        currentUser.run {
+            addVideoHistory(videoId = videoId)
+            repository.save(this)
+        }
     }
 }
