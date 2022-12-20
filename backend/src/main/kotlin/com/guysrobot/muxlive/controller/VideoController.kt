@@ -60,16 +60,19 @@ class VideoController(private val videoService: VideoService) {
     }
 
     @PostMapping("/{videoId}/comment")
+    @ResponseStatus(HttpStatus.OK)
     fun comment(@PathVariable("videoId") videoId: String, @RequestBody commentDto: CommentDto) {
         videoService.addComment(videoId, commentDto)
     }
 
     @GetMapping("/{videoId}/comments")
+    @ResponseStatus(HttpStatus.OK)
     fun comments(@PathVariable("videoId") videoId: String) : List<CommentDto> {
         return videoService.getComments(videoId)
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     fun videos() : List<VideoDto> {
         return videoService.getVideos()
     }
