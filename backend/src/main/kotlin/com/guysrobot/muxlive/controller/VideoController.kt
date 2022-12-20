@@ -1,7 +1,9 @@
 package com.guysrobot.muxlive.controller
 
+import com.guysrobot.muxlive.dto.CommentDto
 import com.guysrobot.muxlive.dto.VideoDto
 import com.guysrobot.muxlive.dto.VideoResponse
+import com.guysrobot.muxlive.model.Comment
 import com.guysrobot.muxlive.service.VideoService
 import jakarta.websocket.server.PathParam
 import org.springframework.beans.factory.annotation.Autowired
@@ -55,5 +57,15 @@ class VideoController(private val videoService: VideoService) {
     @ResponseStatus(HttpStatus.OK)
     fun dislike(@PathVariable videoId: String): VideoDto? {
         return videoService.dislike(videoId)
+    }
+
+    @PostMapping("/{videoId}/comment")
+    fun comment(@PathVariable("videoId") videoId: String, @RequestBody commentDto: CommentDto) {
+        videoService.addComment(videoId, commentDto)
+    }
+
+    @GetMapping("/{videoId}/comments")
+    fun comments(@PathVariable("videoId") videoId: String) : List<CommentDto> {
+        return videoService.getComments(videoId)
     }
 }

@@ -1,5 +1,6 @@
 package com.guysrobot.muxlive.service
 
+import com.guysrobot.muxlive.dto.CommentDto
 import com.guysrobot.muxlive.dto.VideoDto
 import com.guysrobot.muxlive.dto.VideoResponse
 import com.guysrobot.muxlive.model.Video
@@ -128,6 +129,20 @@ class VideoService(
         repository.save(video)
 
         return video.toDTO()
+    }
+
+    fun addComment(videoId: String, commentDto: CommentDto) {
+        getVideo(videoId).run {
+            val comment = commentDto.toComment()
+            this.addComment(comment)
+            repository.save(this)
+
+
+        }
+    }
+
+    fun getComments(videoId: String): List<CommentDto> {
+        return getVideo(videoId).comments.map { it.toDTO() }
     }
 
 }

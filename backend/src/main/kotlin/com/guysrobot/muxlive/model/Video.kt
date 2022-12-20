@@ -3,6 +3,7 @@ package com.guysrobot.muxlive.model
 import com.guysrobot.muxlive.dto.VideoDto
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
+import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicInteger
 
 @Document(value = "Video")
@@ -19,8 +20,9 @@ data class Video(
     val videoStatus: VideoStatus? = null,
     val viewCount: AtomicInteger = AtomicInteger(0),
     val thumbnailUrl: String? = null,
-    val comments: List<Comment> = listOf()
+    private val _comments: MutableList<Comment> = CopyOnWriteArrayList()
 ) {
+    val comments: List<Comment> = _comments
     fun like() {
         likes.incrementAndGet()
     }
@@ -53,5 +55,9 @@ data class Video(
 
     fun view() {
         viewCount.incrementAndGet()
+    }
+
+    fun addComment(comment: Comment) {
+        _comments.add(comment)
     }
 }
