@@ -68,4 +68,9 @@ class VideoController(private val videoService: VideoService) {
     fun comments(@PathVariable("videoId") videoId: String) : List<CommentDto> {
         return videoService.getComments(videoId)
     }
+
+    @GetMapping
+    fun videos() : List<VideoDto> {
+        return videoService.getVideos()
+    }
 }

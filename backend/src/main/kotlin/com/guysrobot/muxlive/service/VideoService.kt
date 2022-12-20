@@ -19,6 +19,7 @@ class VideoService(
         video.view()
         repository.save(video)
     }
+
     fun upload(file: MultipartFile): VideoResponse {
         val path = service.upload(file)
         val video = Video(videoUrl = path)
@@ -143,6 +144,10 @@ class VideoService(
 
     fun getComments(videoId: String): List<CommentDto> {
         return getVideo(videoId).comments.map { it.toDTO() }
+    }
+
+    fun getVideos(): List<VideoDto> {
+        return repository.findAll().map { it.toDTO() }
     }
 
 }
