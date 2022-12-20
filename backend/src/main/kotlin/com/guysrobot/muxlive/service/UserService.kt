@@ -133,4 +133,9 @@ class UserService(
             repository.save(this)
         }
     }
+
+    fun getVideosHistory(userId: String): Set<String> {
+        return repository.findById(userId)
+            .orElseThrow { IllegalArgumentException("Invalid user with userId: $userId") }.videoHistory
+    }
 }

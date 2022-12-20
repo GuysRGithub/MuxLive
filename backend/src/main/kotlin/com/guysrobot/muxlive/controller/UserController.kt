@@ -3,10 +3,7 @@ package com.guysrobot.muxlive.controller
 import com.guysrobot.muxlive.service.UserService
 import org.springframework.security.core.Authentication
 import org.springframework.security.oauth2.jwt.Jwt
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/users")
@@ -29,6 +26,11 @@ class UserController(private val userService: UserService) {
     fun unsubscribe(@PathVariable("userId") userId: String): Boolean {
         userService.unsubscribe(userId)
         return true
+    }
+
+    @GetMapping("/{userId}/history")
+    fun history(@PathVariable("userId") userId: String) : Set<String> {
+        return userService.getVideosHistory(userId)
     }
 
 }
