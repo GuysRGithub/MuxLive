@@ -1,1 +1,62 @@
-<p>video-detail works!</p>
+<div class="flex">
+  <div class="w-1/3 mx-auto py-6">
+    <p class="text-gray-800 text-2xl py-4 text-center font-black">Video detail</p>
+    <form action="" [formGroup]="saveVideoDetailsForm">
+      <div>
+        <label class="block text-sm font-medium text-gray-700"> Title </label>
+        <input
+          [formControl]="title"
+          name="title"
+          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          placeholder="Title..."
+          type="text"
+        />
+        <p name="name" class="text-sm text-red-800"></p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">
+          Description
+        </label>
+        <input
+          [formControl]="description"
+          name="description"
+          class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          placeholder="Description..."
+          type="text"
+        />
+        <p name="description" class="text-sm text-red-800"></p>
+      </div>
+
+      <div class="field">
+        <div class="control flex flex-col flex-wrap mt-2 justify-start">
+          <label class="block text-sm font-medium text-gray-700">
+            Status
+          </label>
+          <div class="mt-2">
+            <div class="relative flex w-full">
+              <select
+                [formControl]="videoStatus"
+                id="select-album"
+                name="album"
+                placeholder="Select status..."
+                autocomplete="off"
+                class="block w-full rounded-sm cursor-pointer focus:outline-none"
+              >
+                <option value="PUBLIC" selected="selected">PUBLIC</option>
+                <option value="PRIVATE" selected="selected">PRIVATE</option>
+              </select>
+            </div>
+
+            <span class="text-xs italic">The status of the video</span>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit"
+        class="bg-indigo-600 py-3 px-6 rounded-md text-white font-black text-sm my-4"
+      >
+        Save
+      </button>
+    </form>
+  </div>
+</div>
