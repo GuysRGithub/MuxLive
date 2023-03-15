@@ -5,23 +5,27 @@ import { Observable } from 'rxjs';
 import VideoResponse from './upload-video/VideoResponse';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class VideoService {
+  private url: string = 'http://localhost:8080/api/videos';
+  constructor(private httpClient: HttpClient) {}
 
-  private url: string = "http://localhost:8080/api/videos"
-  constructor(private httpClient: HttpClient) { }
-
-  uploadVideo(file: File) : Observable<VideoResponse> {
+  uploadVideo(file: File): Observable<VideoResponse> {
     // Http post to upload file
     // You could upload it like this:
-    const formData = new FormData()
-    formData.append('file', file, file.name)
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this.httpClient.post<VideoResponse>(this.url, formData);
+  }
 
-    // Headers
-    const headers = new HttpHeaders({
-      'security-token': 'mytoken'
-    })
-    return this.httpClient.post<VideoResponse>(this.url, formData)
+  uploadThumbnail(file: File, videoId: string): Observable<string> {
+    // Http post to upload file
+    // You could upload it like this:
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    formData.append('videoId', videoId);
+
+    return this.httpClient.post(this.url, formData, { responseType: 'text' });
   }
 }

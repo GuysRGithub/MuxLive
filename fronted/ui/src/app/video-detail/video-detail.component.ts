@@ -12,6 +12,7 @@ export class VideoDetailComponent {
   title: FormControl = new FormControl('');
   description: FormControl = new FormControl('');
   videoStatus: FormControl = new FormControl('');
+  tags = ['Pizza', 'Pasta', 'Parmesan'];
 
   constructor() {
     this.saveVideoDetailsForm = new FormGroup({

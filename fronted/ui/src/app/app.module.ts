@@ -11,7 +11,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { VideoDetailComponent } from './video-detail/video-detail.component';
 import { AuthConfigModule } from './auth/auth-config.module'
 import { AuthInterceptor } from 'angular-auth-oidc-client';
-
+import { TagInputModule } from 'ngx-chips';
+import {VgCoreModule} from '@videogular/ngx-videogular/core';
+import {VgControlsModule} from '@videogular/ngx-videogular/controls';
+import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
+import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +31,11 @@ import { AuthInterceptor } from 'angular-auth-oidc-client';
     NgxFileDropModule,
     AuthConfigModule,
     ReactiveFormsModule,
+    TagInputModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule
   ],
   providers: [
     {
