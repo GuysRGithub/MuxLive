@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { FileSystemFileEntry } from 'ngx-file-drop';
 import { Observable } from 'rxjs';
 import VideoResponse from './upload-video/VideoResponse';
+import { VideoDto } from './video-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -27,5 +28,9 @@ export class VideoService {
     formData.append('videoId', videoId);
 
     return this.httpClient.post(this.url, formData, { responseType: 'text' });
+  }
+
+  getVideo(videoId: string) : Observable<VideoDto> {
+    return this.httpClient.get<VideoDto>(`${this.url}/${videoId}`)
   }
 }
